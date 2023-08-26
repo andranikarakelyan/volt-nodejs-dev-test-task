@@ -1,7 +1,6 @@
 import express, {NextFunction, Request, Response} from 'express';
 import {AppError} from "./utils/AppError";
-
-const PORT = 3000;
+import {AppConfig} from "./config";
 
 export async function startServer() {
 
@@ -31,8 +30,8 @@ export async function startServer() {
       });
   });
 
-  await new Promise(resolve => app.listen(PORT, resolve as () => void));
-  console.log(`Server listening on port ${PORT}`);
+  await new Promise(resolve => app.listen(AppConfig.server_port, resolve as () => void));
+  console.log(`Server listening on port ${AppConfig.server_port}`);
 
 }
 
