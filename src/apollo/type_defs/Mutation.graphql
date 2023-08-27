@@ -1,0 +1,11 @@
+type Mutation {
+    # Auth
+    login(arg: LoginArg): LoginResult
+
+    # Posts
+    publishPost(arg: PublishPostArg): PublishPostResult
+    deletePost(arg: DeletePostArg): DeletePostResult
+
+    # Comments
+    publishComment(arg: PublishCommentArg): PublishCommentResult
+}

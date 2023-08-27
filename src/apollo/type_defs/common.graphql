@@ -1,0 +1,27 @@
+scalar Date
+
+type Error {
+    code: String
+    message: String
+}
+
+type Comment {
+    id: Int!
+    body: String!
+    author_nickname: String!
+    published_at: Date!
+}
+
+type Post {
+    id: Int!
+    title: String!
+    body: String!
+    published_at: Date!
+    author_nickname: String!
+    comments: [Comment]!
+}
+
+enum SortOrder {
+    ASC
+    DESC
+}

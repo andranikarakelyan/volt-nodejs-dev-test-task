@@ -1,0 +1,43 @@
+# login
+input LoginArg {
+    email: String!
+    password: String!
+}
+
+type LoginResult {
+    token: String!
+}
+
+# publishPost
+input PublishPostArg {
+    title: String!
+    body: String!
+    published_at: Date!
+}
+
+type PublishPostResult {
+    post: Post!
+    errors: [Error]
+}
+
+# deletePost
+input DeletePostArg {
+    id: Int!
+}
+
+type DeletePostResult {
+    errors: [Error]
+}
+
+# publishComment
+input PublishCommentArg {
+    body: String!
+    published_at: Date!
+}
+
+type PublishCommentResult {
+    id: Int!
+    body: String!
+    published_at: Date!
+    author_nickname: String!
+}

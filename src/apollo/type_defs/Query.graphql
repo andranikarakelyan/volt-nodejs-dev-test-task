@@ -1,0 +1,5 @@
+type Query {
+    # Posts
+    getPostById(arg: GetPostByIdArg): GetPostByIdResult
+    getPosts(arg: GetPostByIdArg): GetPostByIdResult
+}

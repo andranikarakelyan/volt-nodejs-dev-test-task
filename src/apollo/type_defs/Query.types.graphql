@@ -1,0 +1,25 @@
+# getPostById
+input GetPostByIdArg {
+  id: Int!
+}
+
+type GetPostByIdResult {
+  post: Post!
+}
+
+# getPosts
+input GetPostsArg {
+  sort_order: SortOrder
+  has_comments: Boolean
+  published_after: Date
+  page: Int
+  per_page: Int
+}
+
+type GetPostsResult {
+  posts: [Post]!
+  all_pages_count: Int!
+  all_records_count: Int!
+  is_last_page: Boolean!
+  errors: [Error]
+}

@@ -5,9 +5,8 @@ import {loadGraphqlTypeDefs} from "./type_defs";
 
 export async function initApolloServer(httpServer: http.Server) {
   const resolvers = {
-    Query: {
-      hello: () => 'world',
-    },
+    Query: {},
+    Mutation: {}
   };
 
   const typeDefs= await loadGraphqlTypeDefs();
