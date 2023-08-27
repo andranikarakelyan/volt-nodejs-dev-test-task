@@ -1,6 +1,8 @@
 import {startServer} from "./server";
 import {DbClient} from "./db/DbClient";
 
+process.chdir(__dirname);
+
 async function main() {
   await DbClient.connect();
   await startServer();
