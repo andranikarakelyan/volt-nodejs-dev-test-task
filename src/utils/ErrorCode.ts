@@ -1,0 +1,5 @@
+export enum ErrorCode {
+  FORBIDDEN = 'FORBIDDEN',
+  NOT_IMPLEMENTED = 'NOT_IMPLEMENTED',
+  NOT_FOUND = 'NOT_FOUND'
+}

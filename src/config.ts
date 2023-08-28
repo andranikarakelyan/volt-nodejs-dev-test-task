@@ -11,4 +11,5 @@ export const AppConfig = {
     port: Number(process.env.POSTGRES_PORT),
     db: process.env.POSTGRES_DB,
   },
+  jwt_secret: String(process.env.JWT_SECRET),
 }
