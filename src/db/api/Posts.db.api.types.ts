@@ -1,5 +1,7 @@
 import {IDbComment} from "./Comments.db.api.types";
 
+
+// create
 export interface IDbPostCreateArg {
   title: string;
   body: string;
@@ -11,6 +13,17 @@ export interface IDbPostCreateResult extends IDbPost{
 
 }
 
+// deleteById
+export interface IDbPostDeleteByIdArg {
+  id: number;
+}
+
+export interface IDbPostDeleteByIdResult {
+
+}
+
+
+// common
 export interface IDbPost {
   id: number;
   title: string;

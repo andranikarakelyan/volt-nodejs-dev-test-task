@@ -1,4 +1,9 @@
-import {IDbPostCreateArg, IDbPostCreateResult} from "./Posts.db.api.types";
+import {
+  IDbPostCreateArg,
+  IDbPostCreateResult,
+  IDbPostDeleteByIdArg,
+  IDbPostDeleteByIdResult
+} from "./Posts.db.api.types";
 import {AppError} from "../../utils/AppError";
 import {ErrorCode} from "../../utils/ErrorCode";
 import {PostModel} from "../models/Post.model";
@@ -29,5 +34,17 @@ export class PostsDbApi {
       author_nickname: user.nickname,
       comments: [],
     };
+  }
+
+  public static async deleteById(arg: IDbPostDeleteByIdArg): Promise<IDbPostDeleteByIdResult> {
+
+    await PostModel.destroy({
+      where: {
+        id: arg.id,
+      },
+    });
+
+    return {};
+
   }
 }

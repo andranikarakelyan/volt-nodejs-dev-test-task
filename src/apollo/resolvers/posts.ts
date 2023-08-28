@@ -3,11 +3,15 @@ import {ErrorCode} from "../../utils/ErrorCode";
 import {PostsDbApi} from "../../db/api/Posts.db.api";
 import {IResolverArg} from "../types";
 import {IAppReqContext} from "../../types";
-import {IPublishPostArg, IPublishPostResult} from './posts.types';
+import {IDeletePostArg, IDeletePostResult, IPublishPostArg, IPublishPostResult} from './posts.types';
 
 export const PostResolvers = {
   mutations: {
-    async publishPost(parent: unknown, {arg}: IResolverArg<IPublishPostArg>, context: IAppReqContext): Promise<IPublishPostResult> {
+    async publishPost(
+      parent: unknown,
+      {arg}: IResolverArg<IPublishPostArg>,
+      context: IAppReqContext
+    ): Promise<IPublishPostResult> {
 
       if (!context.auth_user_id) {
         throw new AppError(ErrorCode.FORBIDDEN, `You haven't permission to perform this operation`);
@@ -31,7 +35,15 @@ export const PostResolvers = {
         },
       };
 
-    }
+    },
+    async deletePost(
+      parent: unknown,
+      {arg}: IResolverArg<IDeletePostArg>,
+      context: IAppReqContext,
+    ): Promise<IDeletePostResult> {
+      await PostsDbApi.deleteById({id: arg.id});
+      return {};
+    },
   },
   queries: {},
 };

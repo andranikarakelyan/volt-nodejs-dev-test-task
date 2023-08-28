@@ -8,6 +8,13 @@ export interface IPublishPostResult {
   post: IPost
 }
 
+export interface IDeletePostArg {
+  id: number;
+}
+
+export interface IDeletePostResult {
+}
+
 export interface IPost {
   id: number
   title: string
