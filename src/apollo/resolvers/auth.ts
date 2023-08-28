@@ -3,6 +3,7 @@ import {UsersDbApi} from "../../db/api/Users.db.api";
 import * as jwt from "jsonwebtoken";
 import {AppConfig} from "../../config";
 import {IResolverArg} from "../types";
+import {IJwtTokenPayload} from "../../types";
 
 export const AuthResolvers = {
   mutations: {
@@ -12,8 +13,11 @@ export const AuthResolvers = {
         password: arg.password,
       });
 
+      const payload: IJwtTokenPayload = {
+        user_id: user.id,
+      };
       return {
-        token: jwt.sign({id: user.id, nickname: user.nickname}, AppConfig.jwt_secret, { expiresIn: '7d' }),
+        token: jwt.sign(payload, AppConfig.jwt_secret, { expiresIn: '7d' }),
       };
     }
   },

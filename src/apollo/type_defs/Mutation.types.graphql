@@ -12,7 +12,7 @@ type LoginResult {
 input PublishPostArg {
     title: String!
     body: String!
-    published_at: Date!
+    published_at: Date
 }
 
 type PublishPostResult {

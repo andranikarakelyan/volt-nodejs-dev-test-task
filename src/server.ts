@@ -8,6 +8,7 @@ import {expressMiddleware} from "@apollo/server/express4";
 import {initApolloServer} from "./apollo/server";
 import * as jwt from 'jsonwebtoken';
 import {ErrorCode} from "./utils/ErrorCode";
+import {IAppReqContext, IJwtTokenPayload} from "./types";
 
 export async function startServer() {
 
@@ -21,24 +22,25 @@ export async function startServer() {
   app.use('/api/graphql', expressMiddleware(
     await initApolloServer(httpServer),
     {
-      context: async ({req, res}) => {
+      context: async ({req, res}): Promise<IAppReqContext> => {
         const auth_token = req.headers.authorization;
-        let auth_user;
+        let auth_user_id: undefined | number;
 
         if (auth_token) {
-          auth_user = await new Promise((resolve, reject) => {
+          auth_user_id = await new Promise((resolve, reject) => {
             jwt.verify(auth_token.trim(), AppConfig.jwt_secret, (error, decoded) => {
-              if (error) {
-                reject( new AppError('FORBIDDEN', 'Invalid token') );
+              if (error || !decoded) {
+                return reject( new AppError('FORBIDDEN', 'Invalid token') );
               }
-              resolve(decoded);
+              // TODO: Decide, do I need to check user in database
+              resolve((decoded as IJwtTokenPayload).user_id);
             });
           });
         }
 
         return {
           auth_token,
-          auth_user,
+          auth_user_id,
         };
       }
     }
