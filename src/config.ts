@@ -12,4 +12,9 @@ export const AppConfig = {
     db: process.env.POSTGRES_DB,
   },
   jwt_secret: String(process.env.JWT_SECRET),
+  redis: {
+    host: process.env.REDIS_HOST,
+    port: Number(process.env.REDIS_PORT),
+    password: process.env.REDIS_PASSWORD,
+  },
 }

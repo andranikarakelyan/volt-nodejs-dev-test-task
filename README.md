@@ -11,13 +11,19 @@ docker-compose up -d --build
 
 ## How to see/use quickly
 ```yaml
-# Graphql playground
-url: http://localhost:4000/api/graphql
+graphql playground:
+  url: http://localhost:4000/api/graphql
 
-# Database
-host: postgresql://localhost:4001/postgres
-username: postgres
-password: postgres
+Postgres database:
+  host: postgresql://localhost:4001/postgres
+  username: postgres
+  password: postgres
+
+Redis:
+  host: redis://localhost:4002/0
+  port: 4002
+  user: # Empty
+  password: redis
 ```
 
 # Additional info
@@ -40,6 +46,16 @@ POSTGRES_PORT=5432
 # To access from "outside" connect to localhost:{POSTGRES_PUBLIC_PORT}.
 # Username, password, db you can get from variables above
 POSTGRES_PUBLIC_PORT=4001
+
+# Server's credentials to connect to redis
+REDIS_HOST=volt-task-redis
+REDIS_PORT=6379
+REDIS_PASSWORD=some-password
+
+# For development purposes, "public" port of redis inside the docker.
+# To access from "outside" connect to localhost:{REDIS_PUBLIC_PORT}.
+# Username, password, db you can get from variables above
+REDIS_PUBLIC_PORT=4002
 
 # Auth
 JWT_SECRET=some-secret
