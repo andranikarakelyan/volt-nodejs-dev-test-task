@@ -24,7 +24,7 @@ export const PostResolvers = {
     ): Promise<IPublishPostResult> {
 
       if (!context.auth_user_id) {
-        throw new AppError(ErrorCode.FORBIDDEN, `You haven't permission to perform this operation`);
+        throw new AppError(ErrorCode.UNAUTHORIZED, `Authentication is required to access this resource.`);
       }
 
       const {post} = await PostsDbApi.create({
@@ -73,12 +73,12 @@ export const PostResolvers = {
         },
       };
     },
-    async getMany(
+    async getPosts(
       parent: unknown,
       {arg}: IResolverArg<IGetPostsArgs>,
-      ): Promise<IGetPostsResult> {
+    ): Promise<IGetPostsResult> {
       const {
-        posts,all_pages_count, is_last_page, all_records_count
+        posts, all_pages_count, is_last_page, all_records_count
       } = await PostsDbApi.getMany({
         sort_order: arg.sort_order,
         has_comments: arg.has_comments,
@@ -88,7 +88,7 @@ export const PostResolvers = {
       });
 
       return {
-        posts: posts.map(p=>({
+        posts: posts.map(p => ({
           id: p.id,
           title: p.title,
           body: p.body,

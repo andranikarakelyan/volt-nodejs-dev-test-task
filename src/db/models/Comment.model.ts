@@ -11,9 +11,11 @@ export class CommentModel extends Model {
   @Column({type: DataTypes.STRING})
   body!: string;
 
+  @AllowNull(false)
   @Column({type: DataTypes.DATE})
-  published_at!: Date | null;
+  published_at!: Date;
 
+  @AllowNull(false)
   @ForeignKey(() => PostModel)
   @Column
   post_id!: number;
@@ -21,6 +23,7 @@ export class CommentModel extends Model {
   @BelongsTo(() => PostModel)
   post!: PostModel;
 
+  @AllowNull(false)
   @ForeignKey(() => UserModel)
   @Column
   author_id!: number;

@@ -31,13 +31,12 @@ type DeletePostResult {
 
 # publishComment
 input PublishCommentArg {
+    post_id: Int!
     body: String!
-    published_at: Date!
+    published_at: Date
 }
 
 type PublishCommentResult {
-    id: Int!
-    body: String!
-    published_at: Date!
-    author_nickname: String!
+    comment: Comment
+    errors: [Error]
 }

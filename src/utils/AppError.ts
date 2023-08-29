@@ -21,8 +21,9 @@ export class AppError extends Error {
    */
   get httpStatus(): number {
     switch (this.code) {
-      case ErrorCode.FORBIDDEN:
-        return 403;
+      case ErrorCode.UNAUTHORIZED:
+      case ErrorCode.INVALID_TOKEN:
+        return 401;
       case ErrorCode.NOT_FOUND:
         return 404;
       default:

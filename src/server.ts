@@ -30,7 +30,7 @@ export async function startServer() {
           auth_user_id = await new Promise((resolve, reject) => {
             jwt.verify(auth_token.trim(), AppConfig.jwt_secret, (error, decoded) => {
               if (error || !decoded) {
-                return reject( new AppError('FORBIDDEN', 'Invalid token') );
+                return reject( new AppError(ErrorCode.INVALID_TOKEN, 'The provided authentication token is invalid.') );
               }
               // TODO: Decide, do I need to check user in database
               resolve((decoded as IJwtTokenPayload).user_id);

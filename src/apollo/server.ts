@@ -16,7 +16,7 @@ export async function initApolloServer(httpServer: http.Server) {
     Mutation: {
       ...AuthResolvers.mutations,
       ...PostResolvers.mutations,
-      ...CommentResolvers.queries,
+      ...CommentResolvers.mutations,
     }
   };
 

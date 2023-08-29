@@ -19,6 +19,7 @@ export class PostModel extends Model {
   @Column({type: DataTypes.DATE})
   published_at!: Date;
 
+  @AllowNull(false)
   @ForeignKey(() => UserModel)
   @Column
   author_id!: number;

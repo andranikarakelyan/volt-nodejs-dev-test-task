@@ -1,4 +1,6 @@
 // publishPost
+import {IComment} from "./comments.types";
+
 export interface IPublishPostArg {
   title: string
   body: string
