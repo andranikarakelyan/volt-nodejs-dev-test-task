@@ -2,10 +2,25 @@
 
 Interview task of wearevolt.com
 
+# Quick start
+
 ## How to run with docker
 ```shell
 docker-compose up -d --build
 ```
+
+## How to see/use quickly
+```yaml
+# Graphql playground
+url: http://localhost:4000/api/graphql
+
+# Database
+host: postgresql://localhost:4001/postgres
+username: postgres
+password: postgres
+```
+
+# Additional info
 
 ## Configuration
 
@@ -25,9 +40,12 @@ POSTGRES_PORT=5432
 # To access from "outside" connect to localhost:{POSTGRES_PUBLIC_PORT}.
 # Username, password, db you can get from variables above
 POSTGRES_PUBLIC_PORT=4001
+
+# Auth
+JWT_SECRET=some-secret
 ```
 
-### How to run server in local
+## How to run server in local
 ```shell
 # Production
 npm install
