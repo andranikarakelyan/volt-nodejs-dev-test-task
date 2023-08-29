@@ -9,6 +9,7 @@ import {initApolloServer} from "./apollo/server";
 import * as jwt from 'jsonwebtoken';
 import {ErrorCode} from "./utils/ErrorCode";
 import {IAppReqContext, IJwtTokenPayload} from "./types";
+import multer from "multer";
 
 export async function startServer() {
 
@@ -18,6 +19,12 @@ export async function startServer() {
   app.use(express.static('public'));
   app.use(cors());
   app.use(bodyParser.json());
+
+  app.post('/api/avatars/upload', multer().single('avatar'), (req, res) => {
+    res.status(200).json({
+      status: 'success',
+    });
+  });
 
   app.use('/api/graphql', expressMiddleware(
     await initApolloServer(httpServer),

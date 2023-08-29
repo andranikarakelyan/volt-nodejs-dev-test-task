@@ -1,1 +1,69 @@
-<h1>Hello html</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload avatar</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        #preview-image {
+            max-width: 300px;
+            max-height: 300px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2>Upload avatar</h2>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="image-input">Select Image:</label>
+            <input type="file" class="form-control-file" id="image-input" name="avatar" accept="image/*">
+        </div>
+        <div>
+            <img id="preview-image" src="#">
+        </div>
+        <button type="button" id="upload-btn" class="btn btn-primary mt-2">Upload</button>
+    </form>
+</div>
+
+<script>
+    const imageInput = document.getElementById('image-input');
+    const previewImage = document.getElementById('preview-image');
+    const uploadBtn = document.getElementById('upload-btn');
+
+    imageInput.addEventListener('change', function () {
+        const file = this.files[0];
+
+        if (file) {
+            previewImage.style.display = 'block';
+            previewImage.src = URL.createObjectURL(file);
+        } else {
+            previewImage.style.display = 'none';
+        }
+    });
+
+    uploadBtn.addEventListener( 'click', () => {
+        if( !imageInput.files[0] ) return;
+
+        const formData = new FormData();
+        formData.append('avatar', imageInput.files[0]);
+
+        fetch( '/api/avatars/upload', {
+            method: 'POST',
+            body: formData,
+        } )
+            .then( () => {
+                console.log( 'success' );
+            } )
+            .catch( err => {
+                console.error( err );
+            } )
+    } );
+
+</script>
+
+</body>
+</html>
