@@ -8,9 +8,12 @@ import {
   IDeletePostResult,
   IGetPostByIdArg,
   IGetPostByIdResult,
+  IGetPostsArgs,
+  IGetPostsResult,
   IPublishPostArg,
   IPublishPostResult
 } from './posts.types';
+import {IDbPostGetManyArg} from "../../db/api/Posts.db.api.types";
 
 export const PostResolvers = {
   mutations: {
@@ -53,7 +56,10 @@ export const PostResolvers = {
     },
   },
   queries: {
-    async getPostById(parent: unknown, {arg}: IResolverArg<IGetPostByIdArg>): Promise<IGetPostByIdResult> {
+    async getPostById(
+      parent: unknown,
+      {arg}: IResolverArg<IGetPostByIdArg>
+    ): Promise<IGetPostByIdResult> {
       const {post} = await PostsDbApi.getById({id: arg.id});
 
       return {
@@ -65,6 +71,34 @@ export const PostResolvers = {
           author_nickname: post.author_nickname,
           comments: post.comments,
         },
+      };
+    },
+    async getMany(
+      parent: unknown,
+      {arg}: IResolverArg<IGetPostsArgs>,
+      ): Promise<IGetPostsResult> {
+      const {
+        posts,all_pages_count, is_last_page, all_records_count
+      } = await PostsDbApi.getMany({
+        sort_order: arg.sort_order,
+        has_comments: arg.has_comments,
+        published_after: arg.published_after ? new Date(arg.published_after) : undefined,
+        page: arg.page || 0,
+        per_page: arg.per_page || 10,
+      });
+
+      return {
+        posts: posts.map(p=>({
+          id: p.id,
+          title: p.title,
+          body: p.body,
+          published_at: p.published_at,
+          author_nickname: p.author_nickname,
+          comments: p.comments,
+        })),
+        all_pages_count,
+        all_records_count,
+        is_last_page,
       };
     }
   },

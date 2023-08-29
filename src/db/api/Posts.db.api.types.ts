@@ -1,4 +1,5 @@
 import {IDbComment} from "./Comments.db.api.types";
+import {ESortOrder} from "../../apollo/resolvers/posts.types";
 
 
 // create
@@ -29,6 +30,23 @@ export interface IDbPostGetByIdArg {
 
 export interface IDbPostGetByIdResult {
   post: IDbPost;
+}
+
+// getMany
+export interface IDbPostGetManyArg {
+  ids?: number[];
+  sort_order?: ESortOrder;
+  has_comments?: boolean;
+  published_after?: Date;
+  page?: number;
+  per_page?: number;
+}
+
+export interface IDbPostGetManyResult {
+  posts: IDbPost[];
+  all_pages_count: number;
+  all_records_count: number;
+  is_last_page: boolean;
 }
 
 

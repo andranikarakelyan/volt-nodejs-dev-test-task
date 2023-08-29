@@ -4,13 +4,16 @@ import {
   IDbPostDeleteByIdArg,
   IDbPostDeleteByIdResult,
   IDbPostGetByIdArg,
-  IDbPostGetByIdResult
+  IDbPostGetByIdResult,
+  IDbPostGetManyArg,
+  IDbPostGetManyResult
 } from "./Posts.db.api.types";
 import {AppError} from "../../utils/AppError";
 import {ErrorCode} from "../../utils/ErrorCode";
 import {PostModel} from "../models/Post.model";
 import {UserModel} from "../models/User.model";
 import {CommentModel} from "../models/Comment.model";
+import {DbClient} from "../DbClient";
 
 export class PostsDbApi {
   public static async create(arg: IDbPostCreateArg): Promise<IDbPostCreateResult> {
@@ -88,5 +91,9 @@ export class PostsDbApi {
       },
     };
   };
+
+  public static async getMany(arg: IDbPostGetManyArg): Promise<IDbPostGetManyResult> {
+    return {} as any;
+  }
 
 }

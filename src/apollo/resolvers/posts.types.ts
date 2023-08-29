@@ -26,6 +26,22 @@ export interface IGetPostByIdResult {
   post: IPost;
 }
 
+// getPosts
+export interface IGetPostsArgs {
+  sort_order?: ESortOrder;
+  has_comments?: boolean;
+  published_after?: Date;
+  page?: number;
+  per_page?: number;
+}
+
+export interface IGetPostsResult {
+  posts: IPost[];
+  all_pages_count: number;
+  all_records_count: number;
+  is_last_page: boolean;
+}
+
 // common
 export interface IPost {
   id: number
@@ -34,4 +50,9 @@ export interface IPost {
   published_at: Date
   author_nickname: string
   comments: IComment[]
+}
+
+export enum ESortOrder {
+  ASC = 'ASC',
+  DESC = 'DESC',
 }
