@@ -4,6 +4,7 @@ import {PostsDbApi} from "../../db/api/Posts.db.api";
 import {IResolverArg} from "../types";
 import {IAppReqContext} from "../../types";
 import {
+  ESortOrder,
   IDeletePostArg,
   IDeletePostResult,
   IGetPostByIdArg,
@@ -13,7 +14,6 @@ import {
   IPublishPostArg,
   IPublishPostResult
 } from './posts.types';
-import {IDbPostGetManyArg} from "../../db/api/Posts.db.api.types";
 
 export const PostResolvers = {
   mutations: {
@@ -80,10 +80,10 @@ export const PostResolvers = {
       const {
         posts, all_pages_count, is_last_page, all_records_count
       } = await PostsDbApi.getMany({
-        sort_order: arg.sort_order,
+        sort_order: arg.sort_order || ESortOrder.ASC,
         has_comments: arg.has_comments,
         published_after: arg.published_after ? new Date(arg.published_after) : undefined,
-        page: arg.page || 0,
+        page: arg.page || 1,
         per_page: arg.per_page || 10,
       });
 
@@ -94,7 +94,12 @@ export const PostResolvers = {
           body: p.body,
           published_at: p.published_at,
           author_nickname: p.author_nickname,
-          comments: p.comments,
+          comments: p.comments.map(p => ({
+            id: p.id,
+            body: p.body,
+            published_at: p.published_at,
+            author_nickname: p.author_nickname,
+          })),
         })),
         all_pages_count,
         all_records_count,

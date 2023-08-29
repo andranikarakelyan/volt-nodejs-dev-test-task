@@ -35,11 +35,11 @@ export interface IDbPostGetByIdResult {
 // getMany
 export interface IDbPostGetManyArg {
   ids?: number[];
-  sort_order?: ESortOrder;
+  sort_order: ESortOrder;
   has_comments?: boolean;
   published_after?: Date;
-  page?: number;
-  per_page?: number;
+  page: number;
+  per_page: number;
 }
 
 export interface IDbPostGetManyResult {
