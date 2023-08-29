@@ -1,6 +1,7 @@
-import {Column, Table, Model, AllowNull, ForeignKey, BelongsTo} from "sequelize-typescript";
+import {Column, Table, Model, AllowNull, ForeignKey, BelongsTo, HasMany} from "sequelize-typescript";
 import {DataTypes} from "sequelize";
 import {UserModel} from "./User.model";
+import {CommentModel} from "./Comment.model";
 
 @Table({
   tableName: 'posts',
@@ -24,4 +25,7 @@ export class PostModel extends Model {
 
   @BelongsTo(() => UserModel)
   author!: UserModel;
+
+  @HasMany(() => CommentModel)
+  comments!: CommentModel[];
 }

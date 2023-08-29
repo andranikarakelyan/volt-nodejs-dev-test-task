@@ -1,3 +1,4 @@
+// publishPost
 export interface IPublishPostArg {
   title: string
   body: string
@@ -8,6 +9,7 @@ export interface IPublishPostResult {
   post: IPost
 }
 
+// deletePost
 export interface IDeletePostArg {
   id: number;
 }
@@ -15,6 +17,16 @@ export interface IDeletePostArg {
 export interface IDeletePostResult {
 }
 
+// getPostById
+export interface IGetPostByIdArg {
+  id: number;
+}
+
+export interface IGetPostByIdResult {
+  post: IPost;
+}
+
+// common
 export interface IPost {
   id: number
   title: string

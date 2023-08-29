@@ -5,6 +5,7 @@ input GetPostByIdArg {
 
 type GetPostByIdResult {
   post: Post!
+  errors: [Error]
 }
 
 # getPosts

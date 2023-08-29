@@ -9,8 +9,8 @@ export interface IDbPostCreateArg {
   author_id: number;
 }
 
-export interface IDbPostCreateResult extends IDbPost{
-
+export interface IDbPostCreateResult {
+  post: IDbPost;
 }
 
 // deleteById
@@ -20,6 +20,15 @@ export interface IDbPostDeleteByIdArg {
 
 export interface IDbPostDeleteByIdResult {
 
+}
+
+// getById
+export interface IDbPostGetByIdArg {
+  id: number;
+}
+
+export interface IDbPostGetByIdResult {
+  post: IDbPost;
 }
 
 

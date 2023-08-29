@@ -3,7 +3,14 @@ import {ErrorCode} from "../../utils/ErrorCode";
 import {PostsDbApi} from "../../db/api/Posts.db.api";
 import {IResolverArg} from "../types";
 import {IAppReqContext} from "../../types";
-import {IDeletePostArg, IDeletePostResult, IPublishPostArg, IPublishPostResult} from './posts.types';
+import {
+  IDeletePostArg,
+  IDeletePostResult,
+  IGetPostByIdArg,
+  IGetPostByIdResult,
+  IPublishPostArg,
+  IPublishPostResult
+} from './posts.types';
 
 export const PostResolvers = {
   mutations: {
@@ -17,7 +24,7 @@ export const PostResolvers = {
         throw new AppError(ErrorCode.FORBIDDEN, `You haven't permission to perform this operation`);
       }
 
-      const post = await PostsDbApi.create({
+      const {post} = await PostsDbApi.create({
         title: arg.title,
         body: arg.body,
         published_at: arg.published_at ? new Date(arg.published_at) : new Date(),
@@ -45,5 +52,20 @@ export const PostResolvers = {
       return {};
     },
   },
-  queries: {},
+  queries: {
+    async getPostById(parent: unknown, {arg}: IResolverArg<IGetPostByIdArg>): Promise<IGetPostByIdResult> {
+      const {post} = await PostsDbApi.getById({id: arg.id});
+
+      return {
+        post: {
+          id: post.id,
+          title: post.title,
+          body: post.body,
+          published_at: post.published_at,
+          author_nickname: post.author_nickname,
+          comments: post.comments,
+        },
+      };
+    }
+  },
 };
