@@ -7,23 +7,27 @@ import {ChangeModel} from "./models/Change.model";
 
 export class DbClient {
 
-  public static sequalize: Sequelize = new Sequelize({
-    dialect: 'postgres',
-    host: AppConfig.db.host,
-    port: AppConfig.db.port,
-    username: AppConfig.db.user,
-    password: AppConfig.db.password,
-    database: AppConfig.db.db,
-    logging: false,
-    models: [
-      PostModel,
-      CommentModel,
-      UserModel,
-      ChangeModel,
-    ],
-  });
+  public static sequalize: Sequelize;
 
-  public static async connect() {
+  public static async connect(connectToPublic: boolean = false) {
+
+    const postgres_cfg = connectToPublic ? AppConfig.postgres_public : AppConfig.postgres;
+
+    this.sequalize = new Sequelize({
+      dialect: 'postgres',
+      host: postgres_cfg.host,
+      port: postgres_cfg.port,
+      username: postgres_cfg.user,
+      password: postgres_cfg.password,
+      database: postgres_cfg.db,
+      logging: false,
+      models: [
+        PostModel,
+        CommentModel,
+        UserModel,
+        ChangeModel,
+      ],
+    })
     await this.sequalize.authenticate();
     await this.sequalize.sync({alter: true, logging: false});
   }

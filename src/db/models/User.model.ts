@@ -6,14 +6,14 @@ import {DataTypes} from "sequelize";
 })
 export class UserModel extends Model {
   @AllowNull(false)
-  @Column({type: DataTypes.STRING})
+  @Column({type: DataTypes.TEXT})
   nickname!: string;
 
   @AllowNull(false)
-  @Column({type: DataTypes.STRING})
+  @Column({type: DataTypes.TEXT})
   email!: string;
 
   @AllowNull(false)
-  @Column({type: DataTypes.STRING})
+  @Column({type: DataTypes.TEXT})
   password!: string;
 }

@@ -10,12 +10,14 @@
     "build": "rimraf dist && tsc && npm run copy-files",
     "start": "node dist/main.js",
     "workers:start": "node dist/bullmq.worker.main.js",
-    "copy-files": "copyfiles -u 1 src/**/*.graphql src/public/* dist/"
+    "copy-files": "copyfiles -u 1 src/**/*.graphql src/public/* dist/",
+    "fill-db": "ts-node src/scripts/fillDatabases.script.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@faker-js/faker": "^8.0.2",
     "@types/body-parser": "^1.19.2",
     "@types/cors": "^2.8.13",
     "@types/express": "^4.17.17",

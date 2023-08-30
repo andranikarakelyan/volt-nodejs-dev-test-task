@@ -19,11 +19,11 @@ import {ChangesDbApi} from "../api/Changes.db.api";
 })
 export class PostModel extends Model {
   @AllowNull(false)
-  @Column({type: DataTypes.STRING})
+  @Column({type: DataTypes.TEXT})
   title!: string;
 
   @AllowNull(false)
-  @Column({type: DataTypes.STRING})
+  @Column({type: DataTypes.TEXT})
   body!: string;
 
   @AllowNull(false)

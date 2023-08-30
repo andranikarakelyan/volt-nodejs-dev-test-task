@@ -28,8 +28,6 @@ export class ReportsDbApi {
       raw: true,
     });
 
-    console.log( results );
-
     return {
       users: results.map((r: any) => ({
         email: r.email,

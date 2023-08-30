@@ -4,9 +4,15 @@ Interview task of wearevolt.com
 
 # Quick start
 
-## How to run with docker
 ```shell
+# Run all services at once
 docker-compose up -d --build
+```
+
+```shell
+# Fill databases
+npm i
+npm run fill-db
 ```
 
 ## How to see/use quickly
@@ -43,8 +49,11 @@ POSTGRES_HOST=volt-task-postgres
 POSTGRES_PORT=5432
 
 # For development purposes, "public" port of postgres inside the docker.
-# To access from "outside" connect to localhost:{POSTGRES_PUBLIC_PORT}.
-# Username, password, db you can get from variables above
+# To access from "outside" connect to {POSTGRES_PUBLIC_HOST}:{POSTGRES_PUBLIC_PORT}.
+POSTGRES_PUBLIC_USER=postgres
+POSTGRES_PUBLIC_PASSWORD=postgres
+POSTGRES_PUBLIC_DB=volt-task-db
+POSTGRES_PUBLIC_HOST=localhost
 POSTGRES_PUBLIC_PORT=4001
 
 # Server's credentials to connect to redis

@@ -18,7 +18,7 @@ import {ChangesDbApi} from "../api/Changes.db.api";
 })
 export class CommentModel extends Model {
   @AllowNull(false)
-  @Column({type: DataTypes.STRING})
+  @Column({type: DataTypes.TEXT})
   body!: string;
 
   @AllowNull(false)

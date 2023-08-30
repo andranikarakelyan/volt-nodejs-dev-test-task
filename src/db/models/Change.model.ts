@@ -6,7 +6,7 @@ import {DataTypes} from "sequelize";
 })
 export class ChangeModel extends Model {
   @AllowNull(false)
-  @Column({type: DataTypes.STRING})
+  @Column({type: DataTypes.TEXT})
   table_name!: string;
 
   @AllowNull(false)
