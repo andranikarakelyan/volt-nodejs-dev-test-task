@@ -40,3 +40,14 @@ type PublishCommentResult {
     comment: Comment
     errors: [Error]
 }
+
+# Reports
+input GenerateReportArg {
+    start_date: Date!
+    end_date: Date!
+    email: String!
+}
+
+type GenerateReportResult {
+    message: String!
+}
