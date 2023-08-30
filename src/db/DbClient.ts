@@ -14,6 +14,7 @@ export class DbClient {
     username: AppConfig.db.user,
     password: AppConfig.db.password,
     database: AppConfig.db.db,
+    logging: false,
     models: [
       PostModel,
       CommentModel,

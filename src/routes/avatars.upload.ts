@@ -16,7 +16,7 @@ export function avatarsUpload(req: Request, res: Response){
 
   CloudStorageClient.upload({
     file: req.file?.buffer as Buffer,
-    path: `user-${req.context?.auth_user_id}-avatar.jpg`,
+    path: `avatars/user-${req.context?.auth_user_id}-avatar.jpg`,
   })
     .then(({url}) => {
       res.status(200).json({

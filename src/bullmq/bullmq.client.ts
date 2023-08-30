@@ -1,6 +1,6 @@
 import {Queue} from 'bullmq';
-import {AppConfig} from "../config";
-import {EBullMQJob, IJobReportGeneration} from "./bullmq.client.types";
+import {APP_QUEUE, EBullMQJob, IGenerateReportJobArg} from "./bullmq.client.types";
+import {bullMQConnectionConfig} from "./connection.config";
 
 export class BullMQClient {
 
@@ -8,16 +8,13 @@ export class BullMQClient {
 
   public static async connect() {
 
-    this._queue = new Queue('app-queue', {
-      connection: {
-        host: AppConfig.redis.host,
-        port: AppConfig.redis.port,
-        password: AppConfig.redis.password,
-      },
+    this._queue = new Queue(APP_QUEUE, {
+      connection: bullMQConnectionConfig
     });
+
   }
 
-  public static async addReportGenerationJob(data: IJobReportGeneration) {
+  public static async addReportGenerationJob(data: IGenerateReportJobArg) {
     await this._queue.add(EBullMQJob.REPORT_GENERATION, data);
   }
 

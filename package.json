@@ -6,8 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node-dev --poll src/main.ts",
+    "workers:dev": "ts-node-dev --poll src/bullmq.worker.main.ts",
     "build": "rimraf dist && tsc && npm run copy-files",
     "start": "node dist/main.js",
+    "workers:start": "node dist/bullmq.worker.main.js",
     "copy-files": "copyfiles -u 1 src/**/*.graphql src/public/* dist/"
   },
   "keywords": [],

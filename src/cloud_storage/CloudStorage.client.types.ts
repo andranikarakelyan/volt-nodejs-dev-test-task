@@ -1,5 +1,5 @@
 export interface IUploadToCloudArg {
-  file: Buffer;
+  file: Buffer | string;
   path: string;
 }
 export interface IUploadToCloudResult {

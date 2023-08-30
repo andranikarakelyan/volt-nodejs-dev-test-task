@@ -1,17 +1,17 @@
-import {startServer} from "./server";
-import {DbClient} from "./db/DbClient";
 import {BullMQClient} from "./bullmq/bullmq.client";
 import {CloudStorageClient} from "./cloud_storage/CloudStorage.client";
-import {AppConfig} from "./config";
-
-process.chdir(__dirname);
+import {appWorker} from "./bullmq/worker/app.worker";
+import {DbClient} from "./db/DbClient";
 
 async function main() {
-  console.log( 'Loaded config', AppConfig );
+
+  await CloudStorageClient.connect();
   await DbClient.connect();
   await BullMQClient.connect();
-  await CloudStorageClient.connect();
-  await startServer();
+  console.log('Connected to BullMQ');
+  console.log('Starting workers...');
+  await appWorker.run();
+
 }
 
 main()

@@ -18,6 +18,22 @@ services:
     networks:
       - volt-task-net
 
+  volt-task-workers:
+    container_name: volt-task-workers
+    build:
+      context: .
+    env_file:
+      - .env
+      - .local.env
+    depends_on:
+      - volt-task-postgres
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run workers:dev
+    networks:
+      - volt-task-net
+
   volt-task-postgres:
     container_name: volt-task-postgres
     restart: always
