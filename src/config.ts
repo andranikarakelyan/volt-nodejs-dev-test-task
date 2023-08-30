@@ -17,4 +17,8 @@ export const AppConfig = {
     port: Number(process.env.REDIS_PORT),
     password: process.env.REDIS_PASSWORD,
   },
+  aws: {
+    region: process.env.AWS_REGION,
+    bucket: process.env.AWS_BUCKET,
+  },
 }

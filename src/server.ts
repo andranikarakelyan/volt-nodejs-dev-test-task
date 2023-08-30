@@ -6,10 +6,11 @@ import cors from 'cors';
 import bodyParser from "body-parser";
 import {expressMiddleware} from "@apollo/server/express4";
 import {initApolloServer} from "./apollo/server";
-import * as jwt from 'jsonwebtoken';
 import {ErrorCode} from "./utils/ErrorCode";
 import {IAppReqContext, IJwtTokenPayload} from "./types";
 import multer from "multer";
+import {authMiddleware} from "./middlewares/auth";
+import {avatarsUpload} from "./routes/avatars.upload";
 
 export async function startServer() {
 
@@ -19,36 +20,15 @@ export async function startServer() {
   app.use(express.static('public'));
   app.use(cors());
   app.use(bodyParser.json());
+  app.use(authMiddleware);
 
-  app.post('/api/avatars/upload', multer().single('avatar'), (req, res) => {
-    res.status(200).json({
-      status: 'success',
-    });
-  });
+  app.post('/api/avatars/upload', multer().single('avatar'), avatarsUpload);
 
   app.use('/api/graphql', expressMiddleware(
     await initApolloServer(httpServer),
     {
       context: async ({req, res}): Promise<IAppReqContext> => {
-        const auth_token = req.headers.authorization;
-        let auth_user_id: undefined | number;
-
-        if (auth_token) {
-          auth_user_id = await new Promise((resolve, reject) => {
-            jwt.verify(auth_token.trim(), AppConfig.jwt_secret, (error, decoded) => {
-              if (error || !decoded) {
-                return reject( new AppError(ErrorCode.INVALID_TOKEN, 'The provided authentication token is invalid.') );
-              }
-              // TODO: Decide, do I need to check user in database
-              resolve((decoded as IJwtTokenPayload).user_id);
-            });
-          });
-        }
-
-        return {
-          auth_token,
-          auth_user_id,
-        };
+        return (req as Request & { context?: IAppReqContext }).context || {};
       }
     }
   ));

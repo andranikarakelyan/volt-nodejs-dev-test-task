@@ -59,6 +59,12 @@ REDIS_PUBLIC_PORT=4002
 
 # Auth
 JWT_SECRET=some-secret
+
+# AWS S3 credentials. You can save it .local.env file either
+AWS_REGION=<your region>
+AWS_BUCKET=<your bucket>
+AWS_ACCESS_KEY_ID=<your access key id>
+AWS_SECRET_ACCESS_KEY=<your access key>
 ```
 
 ## How to run server in local

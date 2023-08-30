@@ -26,6 +26,12 @@
             <img id="preview-image" src="#">
         </div>
         <button type="button" id="upload-btn" class="btn btn-primary mt-2">Upload</button>
+        <div>
+            <span id="status"></span>
+        </div>
+        <div>
+            <a id="url" href="#"></a>
+        </div>
     </form>
 </div>
 
@@ -33,6 +39,8 @@
     const imageInput = document.getElementById('image-input');
     const previewImage = document.getElementById('preview-image');
     const uploadBtn = document.getElementById('upload-btn');
+    const urlEl = document.getElementById('url');
+    const status = document.getElementById('status');
 
     imageInput.addEventListener('change', function () {
         const file = this.files[0];
@@ -45,23 +53,40 @@
         }
     });
 
-    uploadBtn.addEventListener( 'click', () => {
-        if( !imageInput.files[0] ) return;
+    uploadBtn.addEventListener('click', () => {
+        if (!imageInput.files[0]) return;
 
         const formData = new FormData();
         formData.append('avatar', imageInput.files[0]);
 
-        fetch( '/api/avatars/upload', {
+        fetch('/api/avatars/upload', {
             method: 'POST',
             body: formData,
-        } )
-            .then( () => {
-                console.log( 'success' );
-            } )
-            .catch( err => {
-                console.error( err );
-            } )
-    } );
+        })
+            .then((res) => res.json())
+            .then(body => {
+                if (body.errors) {
+                    renderStatus('Error: ' + body.errors[0].message, '', true);
+                    return;
+                }
+                renderStatus('Successfully uploaded', body.url, false)
+            })
+            .catch(err => {
+                renderStatus('Error: ' + err.message, '', true)
+            })
+    });
+
+    function renderStatus(msg, url, is_error) {
+        if (is_error) status.style.color = 'red';
+        else status.style.color = 'green';
+
+        status.innerText = msg;
+
+        urlEl.href = url;
+        urlEl.innerText = url;
+
+
+    }
 
 </script>
 
