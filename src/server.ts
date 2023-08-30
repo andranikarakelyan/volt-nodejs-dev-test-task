@@ -11,16 +11,18 @@ import {IAppReqContext, IJwtTokenPayload} from "./types";
 import multer from "multer";
 import {authMiddleware} from "./middlewares/auth";
 import {avatarsUpload} from "./routes/avatars.upload";
+import morgan from 'morgan';
+
+const app = express();
+const httpServer = http.createServer(app);
 
 export async function startServer() {
-
-  const app = express();
-  const httpServer = http.createServer(app);
 
   app.use(express.static('public'));
   app.use(cors());
   app.use(bodyParser.json());
   app.use(authMiddleware);
+  app.use(morgan('combined'))
 
   app.post('/api/avatars/upload', multer().single('avatar'), avatarsUpload);
 
@@ -55,7 +57,9 @@ export async function startServer() {
       });
   });
 
-  await new Promise(resolve => app.listen(AppConfig.server_port, resolve as () => void));
+  await new Promise(resolve => httpServer.listen(AppConfig.server_port, resolve as () => void));
   console.log(`Server listening on port ${AppConfig.server_port}`);
 
 }
+
+export {httpServer};
