@@ -1,7 +1,17 @@
-import {Column, Table, Model, AllowNull, ForeignKey, BelongsTo} from "sequelize-typescript";
+import {
+  Column,
+  Table,
+  Model,
+  AllowNull,
+  ForeignKey,
+  BelongsTo,
+  AfterCreate,
+  BeforeDestroy
+} from "sequelize-typescript";
 import {DataTypes} from "sequelize";
 import {PostModel} from "./Post.model";
 import {UserModel} from "./User.model";
+import {ChangesDbApi} from "../api/Changes.db.api";
 
 @Table({
   tableName: 'comments'
@@ -30,4 +40,25 @@ export class CommentModel extends Model {
 
   @BelongsTo(() => UserModel)
   author!: UserModel;
+
+  @AfterCreate
+  static async afterCreateHook(record: CommentModel) {
+    await ChangesDbApi.create({
+      table_name: CommentModel.tableName,
+      table_id: record.id,
+      data: record.toJSON(),
+      action: 'insert',
+    });
+  }
+
+  @BeforeDestroy
+  static async beforeDestroyHook(record: CommentModel) {
+    await ChangesDbApi.create({
+      table_name: CommentModel.tableName,
+      table_id: record.id,
+      data: record.toJSON(),
+      action: 'delete',
+    });
+  }
+
 }

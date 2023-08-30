@@ -47,11 +47,13 @@ export class PostsDbApi {
 
   public static async deleteById(arg: IDbPostDeleteByIdArg): Promise<IDbPostDeleteByIdResult> {
 
-    await PostModel.destroy({
-      where: {
-        id: arg.id,
-      },
-    });
+    const post = await PostModel.findByPk(arg.id);
+
+    if ( !post ) {
+      throw new AppError( ErrorCode.NOT_FOUND, 'Post not found' );
+    }
+
+    await post.destroy();
 
     return {};
 
