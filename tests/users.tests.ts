@@ -39,7 +39,7 @@ describe('Users API', () => {
 
     } );
 
-    it( 'Should throw error with invalid user credentaials', async () => {
+    it( 'Should throw error with invalid user credentials', async () => {
 
       const user_data = {
         nickname: 'invalid-test-nickname',
