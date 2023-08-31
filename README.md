@@ -32,6 +32,14 @@ Redis:
   password: redis
 ```
 
+## Testing
+
+Now testing flow not configured. "development" and "test" databases are the same. Implemented few tests you can run
+```shell
+npm i
+npm test
+```
+
 # Additional info
 
 ## Configuration
