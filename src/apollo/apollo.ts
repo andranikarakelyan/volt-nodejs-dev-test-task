@@ -7,7 +7,7 @@ import {PostResolvers} from "./resolvers/posts";
 import {CommentResolvers} from "./resolvers/comments";
 import {GraphQLScalarType} from "graphql/type";
 import {ReportsResolvers} from "./resolvers/reports";
-import {expressMiddleware} from "@apollo/server/dist/cjs/express4";
+import {expressMiddleware} from "@apollo/server/express4";
 import {IAppReqContext} from "../types";
 import {Request} from "express";
 
