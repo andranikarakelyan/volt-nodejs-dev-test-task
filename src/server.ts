@@ -4,14 +4,13 @@ import {AppConfig} from "./config";
 import * as http from "http";
 import cors from 'cors';
 import bodyParser from "body-parser";
-import {expressMiddleware} from "@apollo/server/express4";
-import {initApolloServer} from "./apollo/server";
 import {ErrorCode} from "./utils/ErrorCode";
-import {IAppReqContext, IJwtTokenPayload} from "./types";
 import multer from "multer";
 import {authMiddleware} from "./middlewares/auth";
-import {avatarsUpload} from "./routes/avatars.upload";
+import {avatarsUploadRoute} from "./routes/avatars.upload.route";
 import morgan from 'morgan';
+import {statusRoute} from "./routes/status.route";
+import {getApolloServer} from "./apollo/apollo";
 
 const app = express();
 const httpServer = http.createServer(app);
@@ -24,22 +23,10 @@ export async function startServer() {
   app.use(authMiddleware);
   app.use(morgan('combined'))
 
-  app.post('/api/avatars/upload', multer().single('avatar'), avatarsUpload);
+  app.post('/api/avatars/upload', multer().single('avatar'), avatarsUploadRoute);
+  app.get('/api/status', statusRoute);
+  app.use('/api/graphql', await getApolloServer(httpServer));
 
-  app.use('/api/graphql', expressMiddleware(
-    await initApolloServer(httpServer),
-    {
-      context: async ({req, res}): Promise<IAppReqContext> => {
-        return (req as Request & { context?: IAppReqContext }).context || {};
-      }
-    }
-  ));
-
-  app.get('/api/status', (req: Request, res: Response) => {
-    return res.json({
-      status: 'success',
-    });
-  });
 
   app.use('*', (req: Request, res: Response) => {
     throw new AppError(ErrorCode.NOT_FOUND, `Path '${req.originalUrl}' not found`);

@@ -3,7 +3,7 @@ import {AppError} from "../utils/AppError";
 import {CloudStorageClient} from "../cloud_storage/CloudStorage.client";
 import {ErrorCode} from "../utils/ErrorCode";
 
-export function avatarsUpload(req: Request, res: Response){
+export function avatarsUploadRoute(req: Request, res: Response){
   // To not implement login feature in frontend imitate authenticated user
   //FIXME: Remove this code after implementing login feature in frontend side
   req.context = {

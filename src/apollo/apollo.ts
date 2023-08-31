@@ -7,8 +7,11 @@ import {PostResolvers} from "./resolvers/posts";
 import {CommentResolvers} from "./resolvers/comments";
 import {GraphQLScalarType} from "graphql/type";
 import {ReportsResolvers} from "./resolvers/reports";
+import {expressMiddleware} from "@apollo/server/dist/cjs/express4";
+import {IAppReqContext} from "../types";
+import {Request} from "express";
 
-export async function initApolloServer(httpServer: http.Server) {
+export async function getApolloServer(httpServer: http.Server): Promise<any> {
   const resolvers = {
     Query: {
       ...AuthResolvers.queries,
@@ -35,14 +38,21 @@ export async function initApolloServer(httpServer: http.Server) {
 
   const typeDefs = await loadGraphqlTypeDefs();
 
-  const apolloServer = new ApolloServer({
+  const apolloServer = new ApolloServer<IAppReqContext>({
     typeDefs,
     resolvers,
     plugins: [ApolloServerPluginDrainHttpServer({httpServer})],
   });
   await apolloServer.start();
 
-  return apolloServer;
+  return expressMiddleware(
+    apolloServer as any,
+    {
+      context: async ({req, res}): Promise<IAppReqContext> => {
+        return (req as Request & { context?: IAppReqContext }).context || {};
+      }
+    }
+  )
 
 }
 
