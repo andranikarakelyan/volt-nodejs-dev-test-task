@@ -1,10 +1,11 @@
 import {ErrorCode} from "./ErrorCode";
+import {GraphQLError} from "graphql/error";
 
-export class AppError extends Error {
+export class AppError extends GraphQLError {
   public code: string
 
   public constructor(code: string, message: string) {
-    super(message);
+    super(message, { extensions: { code: code } });
     this.code = code;
   }
 
