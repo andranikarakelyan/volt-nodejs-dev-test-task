@@ -1,6 +1,7 @@
 import * as dotenv from 'dotenv';
 
-dotenv.config();
+dotenv.config({override: true, path: '.env'});
+dotenv.config({override: true, path: '.env.local'});
 
 export const AppConfig = {
   server_port: Number(process.env.SERVER_PORT),
